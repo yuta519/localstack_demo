@@ -1,0 +1,21 @@
+version: '3'
+services:
+  localstack:
+    image: localstack/localstack
+    ports:
+      - 1234:1234 # edge port
+    environment:
+      - EDGE_PORT=1234 # is-search-opsとコンフリクトしないように変更している
+      - SERVICES=s3,sqs
+      - AWS_DEFAULT_REGION=ap-northeast-1
+      - DATA_DIR=/tmp/localstack/data
+      - HOSTNAME_EXTERNAL=localstack
+    volumes:
+      - ./containers/localstack/:/docker-entrypoint-initaws.d
+volumes:
+  bundle:
+    driver: local
+  data:
+    driver: local
+  socket:
+    driver: local
